@@ -12,3 +12,4 @@ title-block-banner: true
 ---
 
 
+Hello and welcome to the roll of lecture notes from current and previous weeks.
