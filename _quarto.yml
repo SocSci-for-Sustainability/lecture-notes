@@ -6,12 +6,10 @@ website:
   title: "Social Science for Sustainability — Lecture Notes"
   navbar:
     right:
-      - text: "Subscribe"
+      - text: "Subscribe to SS4S"
         href: "https://matphd.substack.com"
-      - text: "Tech Thursday"
-        href: /tech-thursday
       - text: "Return to SS4S Home"
-        href: "/"
+        href: https://SocSci-for-Sustainability.github.io/
     
     collapse: true
     pinned: true
