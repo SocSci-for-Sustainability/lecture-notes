@@ -21,6 +21,17 @@ categories: [learning models, formal analysis, simulation, cultural evolution]
 ![The VIBE system helps us identify how sustainability priorities can motivate
 new social science studies.](./Figures/intro-sdg-vibe.png){#fig-sdg-vibe fig-align="center" width="950"}
 
+
+### Social opportunities for sustainability
+
+- 
+
+### Social impediments to sustainability
+
+- Self-interested development groups may promote technology that they
+  or business partners will benefit from installing.
+  In reality, Indigenous practices often do much better.
+
 ## Representation of the cultural process
 
 
