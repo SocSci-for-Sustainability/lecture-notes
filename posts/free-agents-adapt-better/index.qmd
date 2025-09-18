@@ -94,6 +94,7 @@ plot_network_adoption(
 )
 ```
 
+### Conformity model dynamics
 
 ```{r}
 conformity_dynamics <- make_model_dynamics(
@@ -149,3 +150,21 @@ p3 <- plot_prevalence(t3, tracked_behaviors = c("Adaptive")) + ggtitle("Trial 3"
 (p1 / p2 / p3) +
   plot_layout(guides = "collect", axes = "collect") 
 ```
+
+#### Conformity dynamics with different initial $a$
+
+
+### Success-biased model dynamics
+
+- We define "success" here as the fitness of one's behavior. Learners are biased
+  towards teachers who are more successful in success-biased learning.
+  - This means we need to implement partner selection, which samples some number
+    of demonstrators, then samples one randomly, weighted by payoff.
+  - Interaction is simple in this model: we assume perfect learning, i.e., the
+    learner always adopts its chosen teacher's behavior
+
+
+```{r}
+
+```
+
