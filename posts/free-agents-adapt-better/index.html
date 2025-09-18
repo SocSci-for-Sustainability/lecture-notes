@@ -415,7 +415,11 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#the-prevalence-dynamic-equation" id="toc-the-prevalence-dynamic-equation" class="nav-link" data-scroll-target="#the-prevalence-dynamic-equation"><span class="header-section-number">2.1.1</span> The <em>prevalence dynamic</em> equation</a></li>
   </ul></li>
-  <li><a href="#agent-based-model" id="toc-agent-based-model" class="nav-link" data-scroll-target="#agent-based-model"><span class="header-section-number">2.2</span> Agent-based model</a></li>
+  <li><a href="#agent-based-model" id="toc-agent-based-model" class="nav-link" data-scroll-target="#agent-based-model"><span class="header-section-number">2.2</span> Agent-based model</a>
+  <ul class="collapse">
+  <li><a href="#conformity-model-dynamics" id="toc-conformity-model-dynamics" class="nav-link" data-scroll-target="#conformity-model-dynamics"><span class="header-section-number">2.2.1</span> Conformity model dynamics</a></li>
+  <li><a href="#success-biased-model-dynamics" id="toc-success-biased-model-dynamics" class="nav-link" data-scroll-target="#success-biased-model-dynamics"><span class="header-section-number">2.2.2</span> Success-biased model dynamics</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -510,6 +514,8 @@ Figure&nbsp;1: The VIBE system helps us identify how sustainability priorities c
 </div>
 </div>
 </div>
+<section id="conformity-model-dynamics" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="conformity-model-dynamics"><span class="header-section-number">2.2.1</span> Conformity model dynamics</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>conformity_dynamics <span class="ot">&lt;-</span> <span class="fu">make_model_dynamics</span>(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -572,8 +578,22 @@ Figure&nbsp;1: The VIBE system helps us identify how sustainability priorities c
 </div>
 </div>
 </div>
+<section id="conformity-dynamics-with-different-initial-a" class="level4">
+<h4 class="anchored" data-anchor-id="conformity-dynamics-with-different-initial-a">Conformity dynamics with different initial <span class="math inline">\(a\)</span></h4>
+</section>
+</section>
+<section id="success-biased-model-dynamics" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="success-biased-model-dynamics"><span class="header-section-number">2.2.2</span> Success-biased model dynamics</h3>
+<ul>
+<li>We define “success” here as the fitness of one’s behavior. Learners are biased towards teachers who are more successful in success-biased learning.
+<ul>
+<li>This means we need to implement partner selection, which samples some number of demonstrators, then samples one randomly, weighted by payoff.</li>
+<li>Interaction is simple in this model: we assume perfect learning, i.e., the learner always adopts its chosen teacher’s behavior</li>
+</ul></li>
+</ul>
 
 
+</section>
 </section>
 </section>
 
