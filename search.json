@@ -4,13 +4,34 @@
     "href": "index.html",
     "title": "Lecture Notes",
     "section": "",
-    "text": "Hello and welcome to the roll of lecture notes from current and previous weeks.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFree Agents Adapt Better than Conformist Puppets\n\n\n\nlearning models\n\nformal analysis\n\nsimulation analysis\n\n\n\n\n\n\n\n\n\nSep 17, 2025\n\n\nMatt Turner\n\n\n\n\n\nNo matching items"
+    "text": "Hello and welcome to the roll of lecture notes from current and previous weeks.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFree Agents Adapt Better than Conformist Puppets\n\n\nFall Quarter Preview and Scoping Lecture\n\n\n\nlearning models\n\nformal analysis\n\nsimulation\n\ncultural evolution\n\n\n\n\n\n\n\n\n\nSep 17, 2025\n\n\nMatt Turner\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
+    "objectID": "posts/free-agents-adapt-better/index.html",
+    "href": "posts/free-agents-adapt-better/index.html",
     "title": "Free Agents Adapt Better than Conformist Puppets",
     "section": "",
-    "text": "# Uncomment and install if you don't already have this.\n# remotes::install_github(\"SocSci-for-Sustainability/socmod\")\n\n# Load other required libraries\n\n\nlibrary(socmod)\nmake_agents &lt;- function (){}\n# agents &lt;- purrr::map()"
+    "text": "Freedom to choose based on one’s self-interest is a hallmark of justice and equality.\nChoosing based on what others do, i.e., conformity, might align with one’s self-interest but it does not in general.\nIn social science for sustainabiltiy we have to know whether one is superior to the other.\n\n\n\n\n\n\n\n\n\nFigure 1: The VIBE system helps us identify how sustainability priorities can motivate new social science studies."
+  },
+  {
+    "objectID": "posts/free-agents-adapt-better/index.html#sustainability",
+    "href": "posts/free-agents-adapt-better/index.html#sustainability",
+    "title": "Free Agents Adapt Better than Conformist Puppets",
+    "section": "",
+    "text": "Figure 1: The VIBE system helps us identify how sustainability priorities can motivate new social science studies."
+  },
+  {
+    "objectID": "posts/free-agents-adapt-better/index.html#dynamical-systems",
+    "href": "posts/free-agents-adapt-better/index.html#dynamical-systems",
+    "title": "Free Agents Adapt Better than Conformist Puppets",
+    "section": "2.1 Dynamical systems",
+    "text": "2.1 Dynamical systems\n\n2.1.1 The prevalence dynamic equation\n\n\\(a\\) is the prevalence of the adaptive behavior, \\(A\\)\n\\(\\frac{da}{dt}\\) is the derivative of \\(a\\) with respect to time, \\(t\\)\n\\(\\dot a\\) is a shorthand notation for \\(\\frac{da}{dt}\\) introduced by Newton\n\\(p_A\\) is the total probability that a random individual, \\(i\\), will either adopt or keep the adaptive behavior \\(A\\)\n\nWe also use notation \\(p_A = P(A)\\)\nThis can be expanded into the probability that an \\(L\\)-doer\nadopts \\(A\\) on the next time step, written \\(P(A | L)\\), and the probability that \\(A\\)-doer keeps doing \\(A\\) on the next time step, written \\(P(A | A)\\).\n\n\n\\[\n\\frac{da}{dt}= \\dot a= p_A - a\n\\]"
+  },
+  {
+    "objectID": "posts/free-agents-adapt-better/index.html#agent-based-model",
+    "href": "posts/free-agents-adapt-better/index.html#agent-based-model",
+    "title": "Free Agents Adapt Better than Conformist Puppets",
+    "section": "2.2 Agent-based model",
+    "text": "2.2 Agent-based model\n\n# Uncomment and install if you don't already have this.\n# remotes::install_github(\"SocSci-for-Sustainability/socmod\")\n\n# Load other required libraries\n\nLoad required libraries. Use the RStudio tool to install any libraries you are missing.\n\nlibrary(socmod)\nlibrary(ggplot2)\nlibrary(dplyr)\n\nTo start we need to initialize our model and the agents using make_abm and initialize_agents from socmod. We specify that there are ten agents and no network structure by explicitly providing an empty graph (no edges) with ten nodes to the graph named argument.\nWe set two agents to be in the seed set who receive “direct instruction”, i.e., we set the behaviors of two randomly-chosen agents to be “Adaptive”. “Adaptive” and “Legacy” are the two default values for agent behaviors, so there is no need to specify these. The initial_prevalence passed to initialize_agents is implicitly the initial prevalence of the adaptive behavior.\n\n# Initialize the ABM and agents\nabm &lt;- \n  make_abm(graph = igraph::make_empty_graph(10)) |&gt;\n  initialize_agents(initial_prevalence = 0.2)\n\n# Inspect the initialization to ensure 2 of 10 are A-doers\nplot_network_adoption(\n  abm, layout = igraph::in_circle(), \n  plot_mod = \\(p) p + ggtitle(\"Adoption at t = 0\")\n)\n\n\n\n\n\n\n\n\n\nconformity_dynamics &lt;- make_model_dynamics(\n  \n  # Partner selection is not necessary in conformity\n  partner_selection = \\(focal_agent, model) {},\n  \n  # Conformity interaction is not partner-based, so use dummy arg\n  interaction = \\(focal_agent, ., model) {\n    \n    # Observe behaviors of randomly-chosen demonstrators\n    behaviors_sample &lt;- sample(model$agent_behaviors, \n                               model$n_demonstrators)\n    \n    # Count how many of each behavior is present\n    behaviors_table &lt;- table(behaviors_sample)\n    print(behaviors_table)\n    \n    # Sample behavior to copy, weighted by frequency; names are behaviors\n    next_behavior &lt;- sample(names(behaviors_table), 1, behaviors_table)\n      \n    # Only need to set next behavior, payoffs irrelevant w/ conformity\n    focal_agent$set_next_behavior(next_behavior)\n  },\n  # Use the learning model stepper that makes \"next\" behavior/payoff \"current\"\n  model_step = learning_model_step\n)\n\nLet’s define the agent-based model again, this time with more agents. We will also run a single trial and plot observations of the simulated prevalence dynamics.\nWhen I do little experiments like this I set up single cells that can run an entire model setup and simulation trial. Then I keep running it to see what changes.\n\nsource(\"R/model.R\")\n\nt1 &lt;- single_conformity_trial(n_agents = 100, n_demonstrators = 3)\nt2 &lt;- single_conformity_trial(n_agents = 100, n_demonstrators = 3)\nt3 &lt;- single_conformity_trial(n_agents = 100, n_demonstrators = 3)\n\n\nlibrary(patchwork)\n\n# Plot prevalence dynamics of Adaptive behavior only\np1 &lt;- plot_prevalence(t1, tracked_behaviors = c(\"Adaptive\")) + ggtitle(\"Trial 1\") + theme(plot.title = element_text(size = 12))\n\nWarning: Removed non-summary-safe metadata: agent_behaviors\n\np2 &lt;- plot_prevalence(t2, tracked_behaviors = c(\"Adaptive\")) + ggtitle(\"Trial 2\") + theme(plot.title = element_text(size = 12))\n\nWarning: Removed non-summary-safe metadata: agent_behaviors\n\np3 &lt;- plot_prevalence(t3, tracked_behaviors = c(\"Adaptive\")) + ggtitle(\"Trial 3\") + theme(plot.title = element_text(size = 12))\n\nWarning: Removed non-summary-safe metadata: agent_behaviors\n\n(p1 / p2 / p3) +\n  plot_layout(guides = \"collect\", axes = \"collect\")"
   }
 ]
