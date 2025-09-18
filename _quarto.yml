@@ -1,0 +1,38 @@
+project:
+  type: website
+sidebar:
+  logo: SS4S.key.png
+website:
+  title: "Social Science for Sustainability — Lecture Notes"
+  navbar:
+    right:
+      - text: "Subscribe"
+        href: "https://matphd.substack.com"
+      - text: "Tech Thursday"
+        href: /tech-thursday
+      - text: "Return to SS4S Home"
+        href: "/"
+    
+    collapse: true
+    pinned: true
+    search: true
+
+
+
+format:
+  html:
+    toc: true
+    include-in-header: header.html
+    theme: 
+      light:
+        - theme-light.scss
+        - styles.scss
+      dark:
+        - darkly 
+        - theme-dark.scss
+        - styles.scss
+    fontsize: 1.0em
+    linestretch: 1.2
+    number-sections: true
+    number-depth: 3
+

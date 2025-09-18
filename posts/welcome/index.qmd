@@ -1,0 +1,24 @@
+---
+title: "Free Agents Adapt Better than Conformist Puppets"
+author: "Matt Turner"
+date: "2025-09-17"
+categories: [learning models, formal analysis, simulation analysis]
+---
+
+
+
+```{r}
+# Uncomment and install if you don't already have this.
+# remotes::install_github("SocSci-for-Sustainability/socmod")
+
+# Load other required libraries
+
+```
+
+
+
+```{r}
+library(socmod)
+make_agents <- function (){}
+# agents <- purrr::map()
+```
