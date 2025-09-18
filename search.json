@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Lecture Notes",
+    "section": "",
+    "text": "Hello and welcome to the roll of lecture notes from current and previous weeks.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFree Agents Adapt Better than Conformist Puppets\n\n\n\nlearning models\n\nformal analysis\n\nsimulation analysis\n\n\n\n\n\n\n\n\n\nSep 17, 2025\n\n\nMatt Turner\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Free Agents Adapt Better than Conformist Puppets",
+    "section": "",
+    "text": "# Uncomment and install if you don't already have this.\n# remotes::install_github(\"SocSci-for-Sustainability/socmod\")\n\n# Load other required libraries\n\n\nlibrary(socmod)\nmake_agents &lt;- function (){}\n# agents &lt;- purrr::map()"
+  }
+]
