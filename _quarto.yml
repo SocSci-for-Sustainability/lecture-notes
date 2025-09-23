@@ -15,7 +15,9 @@ website:
     pinned: true
     search: true
 
-
+bibliography: 
+  # - /Users/mt/workspace/Writing/library.bib
+  - references.bib
 
 format:
   html:

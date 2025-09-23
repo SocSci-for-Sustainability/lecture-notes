@@ -4,41 +4,72 @@ subtitle: "Fall Quarter Preview and Scoping Lecture"
 author: "Matt Turner"
 date: "2025-09-17"
 categories: [learning models, formal analysis, simulation, cultural evolution]
+editor: 
+  markdown: 
+    wrap: 80
 ---
 
 # Introduction
 
-- Freedom to choose based on one's self-interest is a hallmark of justice and
-  equality.
-- Choosing based on what others do, i.e., conformity, might align with one's
-  self-interest but it does not in general.
-- In social science for sustainabiltiy we have to know whether one 
-  is superior to the other.
+-   Freedom to choose one's own actions based on one's self-interest is a
+    hallmark of justice and equality. Human cognition lets us infer what might
+    be beneficial for us to do. Human capacity for information integration
+    verges on miraculous—in the blink of an eye we can identify a room full of
+    people remembering rich details about them at the same time; evaluate the
+    mood; and self-regulate our mood so we can react mindfully and wisely to a
+    changing environment [@Witt2024]. Most of these miraculous capacities do not
+    come pre-installed at birth: *homo sapiens* evolved long developmental
+    childhoods and culture, both of which affect how we think, learn, and
+    interact [@Tomasello2019].
+-   Choosing based on what others do, i.e., conformity, might align with one's
+    self-interest but it does not in general. Oftentimes conformity is
+    *enforced* through coercion, including violence or threats of violence.
+    -   We often communicate in "echo chambers": our social partners tend to
+        have adopted similar practices as us and share similar opinions.
+    -   This means that even if a sustainable practice is popular, certain
+        groups may only rarely observe others doing the practice. Conformity
+        would therefore be a weak or absent force for promoting sustainability
+        within that group.
+-   
 
 ## Sustainability
 
-
 ![The VIBE system helps us identify how sustainability priorities can motivate
-new social science studies.](./Figures/intro-sdg-vibe.png){#fig-sdg-vibe fig-align="center" width="950"}
+new social science studies.](./Figures/intro-sdg-vibe.png){#fig-sdg-vibe
+fig-align="center" width="950"}
 
+### Social learning of sustainable practices
 
-### Social opportunities for sustainability
+There are innumerable ways to represent the learning process. We will focus on
+just two highly simplified representations that nonetheless capture the two
+learning styles we want to compare:
 
-- 
+![An individual considers whether to install solar panels, an adaptive practice.
+Dollar symbols represent
+"successfulness".](images/clipboard-3131304695.png){#fig-solar-example
+width="600"}
+
+-   Consider the illustration in @fig-solar-example: the *focal agent*, i.e.,
+    the one we focus on who is deciding what to do.
+-   There are two
 
 ### Social impediments to sustainability
 
-- Self-interested development groups may promote technology that they
-  or business partners will benefit from installing.
-  In reality, Indigenous practices often do much better.
+-   Self-interested development groups may promote technology that they or
+    business partners will benefit from installing. In reality, Indigenous
+    practices often do much better.
 
 ## Representation of the cultural process
-
 
 # Prevalence Dynamics
 
 The prevalence dynamic is a way to express change in the prevalence of the
-adaptive practice at each time step. 
+adaptive practice at each time step.
+
+![Diagram of behavior possibilities with three learning outcomes framed in terms
+of the adaptive
+behavior.](images/clipboard-3172079776.png){#fig-behaviors-and-transitions
+width="600"}
 
 ## Dynamical systems
 
@@ -49,21 +80,20 @@ adaptive practice at each time step.
 \newcommand{\pal}{P(A|L)}
 \newcommand{\pla}{P(L|A)}
 
-- $a$ is the prevalence of the adaptive behavior, $A$
-- $\dadt$ is the derivative of $a$ with respect to time, $t$
-- $\adot$ is a shorthand notation for $\dadt$ introduced by Newton
-- $p_A$ is the total probability that a random individual, $i$,
-  will either *adopt* or *keep* the adaptive behavior $A$
-  - We also use notation $p_A = P(A)$
-  - This can be expanded into the probability that an $L$-doer  
-    *adopts* $A$ on the next time step, written $P(A | L)$, and the
-    probability that $A$-doer keeps doing $A$ on the next time step,
-    written $P(A | A)$.
+-   $a$ is the prevalence of the adaptive behavior, $A$
+-   $\frac{da}{dt}$ is the derivative of $a$ with respect to time, $t$
+-   $\dot a$ is a shorthand notation for $\frac{da}{dt}$ introduced by Newton
+-   $p_A$ is the total probability that a random individual, $i$, will either
+    *adopt* or *keep* the adaptive behavior $A$
+    -   We also use notation $p_A = P(A)$
+    -   This can be expanded into the probability that an $L$-doer\
+        *adopts* $A$ on the next time step, written $P(A | L)$, and the
+        probability that $A$-doer keeps doing $A$ on the next time step, written
+        $P(A | A)$.
 
 $$
-\dadt = \adot = p_A - a
+\frac{da}{dt}= \dot a= p_A - a
 $$
-
 
 ## Agent-based model
 
@@ -75,7 +105,8 @@ $$
 
 ```
 
-Load required libraries. Use the RStudio tool to install any libraries you are missing.
+Load required libraries. Use the RStudio tool to install any libraries you are
+missing.
 
 ```{r}
 #| output: false
@@ -84,10 +115,16 @@ library(ggplot2)
 library(dplyr)
 ```
 
-To start we need to initialize our model and the agents using `make_abm` and `initialize_agents` from `socmod`. We specify that there are ten agents and no network structure by explicitly providing an empty graph (no edges) with ten nodes to the `graph` named argument.
+To start we need to initialize our model and the agents using `make_abm` and
+`initialize_agents` from `socmod`. We specify that there are ten agents and no
+network structure by explicitly providing an empty graph (no edges) with ten
+nodes to the `graph` named argument.
 
-We set two agents to be in the seed set who receive "direct instruction", i.e., we set the behaviors of two randomly-chosen agents to be "Adaptive". "Adaptive" and "Legacy" are the two default values for agent behaviors, so there is no need to specify these. The `initial_prevalence` passed to `initialize_agents` is implicitly the initial prevalence of the *adaptive* behavior.
-
+We set two agents to be in the seed set who receive "direct instruction", i.e.,
+we set the behaviors of two randomly-chosen agents to be "Adaptive". "Adaptive"
+and "Legacy" are the two default values for agent behaviors, so there is no need
+to specify these. The `initial_prevalence` passed to `initialize_agents` is
+implicitly the initial prevalence of the *adaptive* behavior.
 
 ```{r}
 #| fig-width: 5
@@ -105,9 +142,17 @@ plot_network_adoption(
 )
 ```
 
+
 ### Conformity model dynamics
 
+Below I pasted the definition of conformity learning model dynamics from
+`posts/free-agents-adapt-better/R/model.R`.
+
 ```{r}
+#| execute: false
+#' Create a conformity learning instance of ModelDynamics.
+#' 
+#' Returns socmod::ModelDynamics
 conformity_dynamics <- make_model_dynamics(
   
   # Partner selection is not necessary in conformity
@@ -117,31 +162,41 @@ conformity_dynamics <- make_model_dynamics(
   interaction = \(focal_agent, ., model) {
     
     # Observe behaviors of randomly-chosen demonstrators
-    behaviors_sample <- sample(model$agent_behaviors, 
-                               model$n_demonstrators)
+    behaviors_sample <- sample(model$get_parameter("agent_behaviors"), 
+                               model$get_parameter("n_demonstrators"))
     
     # Count how many of each behavior is present
     behaviors_table <- table(behaviors_sample)
-    print(behaviors_table)
     
     # Sample behavior to copy, weighted by frequency; names are behaviors
-    next_behavior <- sample(names(behaviors_table), 1, behaviors_table)
-      
+    next_behavior <- sample(names(behaviors_table), size = 1, prob = behaviors_table)
+    
     # Only need to set next behavior, payoffs irrelevant w/ conformity
     focal_agent$set_next_behavior(next_behavior)
   },
   # Use the learning model stepper that makes "next" behavior/payoff "current"
-  model_step = learning_model_step
+  model_step = \(model) {
+    learning_model_step(model)
+    
+    model$set_parameter("agent_behaviors", 
+                        purrr::map_chr(model$agents, \(a) a$get_behavior()))
+  
+  }
 )
 ```
 
-Let's define the agent-based model again, this time with more agents. We will also run a single trial and plot observations of the simulated prevalence dynamics.
+Let's define the agent-based model again, this time with more agents. We will
+also run a single trial and plot observations of the simulated prevalence
+dynamics.
 
-When I do little experiments like this I set up single cells that can run an entire model setup and simulation trial. Then I keep running it to see what changes.
-
-
+When I do little experiments like this I set up single cells that can run an
+entire model setup and simulation trial. Then I keep running it to see what
+changes.
 
 ```{r}
+#| warnings: false
+
+# Load model code w/ full project path posts/free-agents-adapt-better/R/model.R
 source("R/model.R")
 
 t1 <- single_conformity_trial(n_agents = 100, n_demonstrators = 3)
@@ -162,20 +217,23 @@ p3 <- plot_prevalence(t3, tracked_behaviors = c("Adaptive")) + ggtitle("Trial 3"
   plot_layout(guides = "collect", axes = "collect") 
 ```
 
-#### Conformity dynamics with different initial $a$
-
+Every time we run the series of commands above we get a new three time series of
+adaptation prevalence. Some will end at a prevalence of 1.0, indicating all
+agents are $A$-doers. Some end at a prevalence of 0.0, indicating all are
+$L$-doers. When one behavior becomes the only behavior we say that behavior has
+fixated. Typically when an intervention fails it is because of
 
 ### Success-biased model dynamics
 
-- We define "success" here as the fitness of one's behavior. Learners are biased
-  towards teachers who are more successful in success-biased learning.
-  - This means we need to implement partner selection, which samples some number
-    of demonstrators, then samples one randomly, weighted by payoff.
-  - Interaction is simple in this model: we assume perfect learning, i.e., the
-    learner always adopts its chosen teacher's behavior
-
+-   We define "success" here as the fitness of one's behavior. Learners are
+    biased towards teachers who are more successful in success-biased learning.
+    -   This means we need to implement partner selection, which samples some
+        number of demonstrators, then samples one randomly, weighted by payoff.
+    -   Interaction is simple in this model: we assume perfect learning, i.e.,
+        the learner always adopts its chosen teacher's behavior
 
 ```{r}
 
 ```
 
+# References
