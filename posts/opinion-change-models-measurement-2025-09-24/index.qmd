@@ -8,5 +8,18 @@ categories: [opinion dynamics, polarization, extremism, statistics]
 # Introduction
 
 - Opinions are equivalent to beliefs or attitudes: they are theoretical constructions hypothesized to affect behavior, but need not be based on evidence or experience, but hearsay from others.
-- 
+- Polarization and extremism incapacitate the institutions responsible for
+  forest and coastline management, to name two examples. In forest management,
+  we know prescribed burns could prevent catastrophic wildfires 
+  [@Eisenberg2019;@Kolden2019]. 
+  So although we have Indigenous practices for climate action ([SDG 13](https://sdgs.un.org/goals/goal13))
+  and the protection of Life on Land ([SDG
+  15](https://sdgs.un.org/goals/goal15)) they are ignored in favor of
+  maladaptive modern practices. These traditional practices have helped
+  historically local inhabitants over thousands of years, and they can still
+  help now.
+  
+- Models of opinion change began with @DeGroot1974 who developed a model that
+  calculates the final opinion of a group given initial opinions and the social
+  network representing who interacts with whom.
 

@@ -17,5 +17,7 @@ Hello and welcome to the roll of lecture notes from current and previous weeks.
 
 Search for something (top right), or browse by category (click a Category to the right).
 
+
+
 ## Lecture Notes Posts {.unnumbered }
 
