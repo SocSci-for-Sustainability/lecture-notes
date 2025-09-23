@@ -1,0 +1,12 @@
+---
+title: "Opinion Change Modeling and Measurement"
+date: 2025-09-24
+author: Matt Turner
+categories: [opinion dynamics, polarization, extremism, statistics]
+---
+
+# Introduction
+
+- Opinions are equivalent to beliefs or attitudes: they are theoretical constructions hypothesized to affect behavior, but need not be based on evidence or experience, but hearsay from others.
+- 
+
