@@ -92,11 +92,21 @@ vicarity_dynamics <- make_model_dynamics(
   
   # Partner selection is adaptive; learners prefer more successful individuals
   partner_selection = \(focal_agent, model) {
-    # Observe behaviors of randomly-chosen demonstrators
-    behaviors_sample <- sample(model$get_parameter("agent_payoffs"), 
-                               model$get_parameter("n_demonstrators"))
     
-    return ()
+    # Select n_demonstrators potential teachers
+    M <- model$get_parameter("n_demonstrators")
+    prospective_teacher_ids <- sample.int(n = N, size = M, replace = FALSE) 
+    # Extract prospective teacher fitnesses
+    prospective_fitnesses <- 
+      purrr::map_dbl(prospective_teacher_ids, 
+                     ~ model$get_agent(.x)$get_fitness())
+      
+    partner_idx <- sample(prospective_teacher_ids, size = 1, 
+                          prob = prospective_fitnesses)
+    
+    partner <- model$get_agent(partner_idx)
+    
+    return (partner)
   },
   
   # Conformity interaction is not partner-based, so use dummy arg
@@ -105,6 +115,7 @@ vicarity_dynamics <- make_model_dynamics(
     # Only need to set next behavior, payoffs irrelevant w/ conformity
     focal_agent$set_next_behavior(next_behavior)
   },
+  
   # Use the learning model stepper that makes "next" behavior/payoff "current"
   model_step = \(model) {
     learning_model_step(model)
