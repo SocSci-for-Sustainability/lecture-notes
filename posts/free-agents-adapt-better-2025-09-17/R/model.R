@@ -40,8 +40,8 @@ conformity_dynamics <- make_model_dynamics(
     learning_model_step(model)
     
     model$set_parameter("agent_behaviors", 
-                        purrr::map_chr(model$agents, \(a) a$get_behavior()))
-  
+                        purrr::map_chr(model$agents, 
+                                       \(a) a$get_behavior()))
   }
 )
 
@@ -131,6 +131,7 @@ vicarity_dynamics <- make_model_dynamics(
 #' 
 #' @returns socmod::AgentBasedModel
 make_vicarity_abm <- function(n_agents = 10, n_demonstrators = 5) {
+  
   abm <- 
     make_abm(graph = igraph::make_empty_graph(n_agents), 
              model_dynamics = vicarity_dynamics,
