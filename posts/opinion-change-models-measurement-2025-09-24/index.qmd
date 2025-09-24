@@ -22,7 +22,6 @@ categories: [opinion dynamics, polarization, extremism, statistics]
   sustainable adaptation: why do maladaptive, unsustainable practices take hold 
   and not adaptive, sustainable ones [@fig-puzzle-of-adaptation]?
 
-
 ![**The puzzle of adaptation.**](../Figures/puzzle-of-adaptation.png){#fig-puzzle-of-adaptation width="700"}
 
   

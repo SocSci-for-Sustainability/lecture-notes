@@ -16,7 +16,7 @@ website:
     search: true
 
 bibliography: 
-  # - /Users/mt/workspace/Writing/library.bib
+  - /Users/mt/workspace/Writing/library.bib
   - references.bib
 
 format:
