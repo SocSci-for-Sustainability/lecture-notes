@@ -53,13 +53,25 @@ categories: [opinion dynamics, polarization, extremism, statistics]
     change, which is an abstract model of polarity change in networks. @Hopfield1982  
     first developed this to simulate "neural networks and physical systems". 
   - @Flache2011 
-- Modern models are *generative*, with different types serving different
+- Modern opinion dynamics models are mostly *generative*, with different types serving different
   purposes. Many problems in opinion science were articulated about the same
   time as computing power became widely available enough for scientists to be
   able to use agent-based modeling *en masse*. 
+- It does seem like there exist 
 
 
 # Measurement
+
+- In this lecture we focus on measuring opinion change measured with survey
+  responses. 
+- We'll also review 
+
+## Opinions
+
+## Opinion change
+
+
+## Surveys
 
 ## Legacy opinion change measurement
 
