@@ -3,101 +3,165 @@ title: "Opinion Change Modeling and Measurement"
 date: 2025-09-24
 author: Matt Turner
 categories: [opinion dynamics, polarization, extremism, statistics]
+editor: 
+  markdown: 
+    wrap: 80
 ---
 
 # Introduction
 
-- Opinions are equivalent to beliefs or attitudes: they are theoretical constructions hypothesized to affect behavior, but need not be based on evidence or experience, but hearsay from others.
-- Polarization and extremism incapacitate the institutions responsible for
-  forest and coastline management, to name two examples. In forest management,
-  we know prescribed burns could prevent catastrophic wildfires 
-  [@Eisenberg2019;@Kolden2019]. 
-  So although we have Indigenous practices for climate action ([SDG 13](https://sdgs.un.org/goals/goal13))
-  and the protection of Life on Land ([SDG
-  15](https://sdgs.un.org/goals/goal15)) they are ignored in favor of
-  maladaptive modern practices. These traditional practices have helped
-  historically local inhabitants over thousands of years, and they can still
-  help now.
-- Opinion science, then, can help us answer the primary puzzle of
-  sustainable adaptation: why do maladaptive, unsustainable practices take hold 
-  and not adaptive, sustainable ones [@fig-puzzle-of-adaptation]?
+-   Opinions are equivalent to beliefs or attitudes: they are theoretical
+    constructions hypothesized to affect behavior, but need not be based on
+    evidence or experience, but hearsay from others.
+-   Polarization and extremism incapacitate the institutions responsible for
+    forest and coastline management, to name two examples. In forest management,
+    we know prescribed burns could prevent catastrophic wildfires
+    [@Eisenberg2019; @Kolden2019]. So although we have Indigenous practices for
+    climate action ([SDG 13](https://sdgs.un.org/goals/goal13)) and the
+    protection of Life on Land ([SDG 15](https://sdgs.un.org/goals/goal15)) they
+    are ignored in favor of maladaptive modern practices. These traditional
+    practices have helped historically local inhabitants over thousands of
+    years, and they can still help now.
+-   Opinion science, then, can help us answer the primary puzzle of sustainable
+    adaptation: why do maladaptive, unsustainable practices take hold and not
+    adaptive, sustainable ones [@fig-puzzle-of-adaptation]?
 
-![**The puzzle of adaptation.**](../Figures/puzzle-of-adaptation.png){#fig-puzzle-of-adaptation width="700"}
+![**The puzzle of
+adaptation.**](../Figures/puzzle-of-adaptation.png){#fig-puzzle-of-adaptation
+width="700"}
 
-  
 # Models
 
-- Models of opinion change began with @DeGroot1974 who developed a model that
-  calculates the final opinion of a group given initial opinions and the social
-  network representing who interacts with whom. 
-  - We call this model of opinion change in DeGroot's model *simple consensus*. 
-    In this model process, two people interacting will both come to have the mean
-    of their initial opinions. People don't ignore
-    each other, they don't cause others to be repulsed becoming more oppositely
-    extreme, and people are all equally stubborn. The model social groups 
-    DeGroot simulated with his model were small, with *ad hoc* social network
-    choices, not motivated by specific empirical questions. This is perfectly
-    fine, the normal course of science. 
-    DeGroot's paper provided the impulse and the theoretical foundations that
-    modern opinion science models have expanded on to include 
-    richer representations of real-world social influence processes.
-- Opinion change became progressively more complex over the years. 
-  Some of the first opinion change models in the decades following DeGroot 
-  assumed social influence could either lead to 
-  1. Greater consensus if the people interacting are similar enough.
-  2. People ignore each other if they are too different.
-- Continuing to build, @Macy2003 operationalized consensus, gradual ignorance
-  increase with opinion distance, and opinion *repulsion* where people become
-  even more opposed to one another in their opinions following an interaction.
-  - Macy and colleagues adapted the *Hopfield network* as their model of opinion
-    change, which is an abstract model of polarity change in networks. @Hopfield1982  
-    first developed this to simulate "neural networks and physical systems". 
-  - @Flache2011 
-- Modern opinion dynamics models are mostly *generative*, with different types serving different
-  purposes. Many problems in opinion science were articulated about the same
-  time as computing power became widely available enough for scientists to be
-  able to use agent-based modeling *en masse*. 
-- It does seem like there exist 
+-   Models of opinion change began with @DeGroot1974 who developed a model that
+    calculates the final opinion of a group given initial opinions and the
+    social network representing who interacts with whom.
+    -   We call this model of opinion change in DeGroot's model *simple
+        consensus*. In this model process, two people interacting will both come
+        to have the mean of their initial opinions. People don't ignore each
+        other, they don't cause others to be repulsed becoming more oppositely
+        extreme, and people are all equally stubborn. The model social groups
+        DeGroot simulated with his model were small, with *ad hoc* social
+        network choices, not motivated by specific empirical questions. This is
+        perfectly fine, the normal course of science. DeGroot's paper provided
+        the impulse and the theoretical foundations that modern opinion science
+        models have expanded on to include richer representations of real-world
+        social influence processes.
+-   Opinion change became progressively more complex over the years. Some of the
+    first opinion change models in the decades following DeGroot assumed social
+    influence could either lead to
+    1.  Greater consensus if the people interacting are similar enough.
+    2.  People ignore each other if they are too different.
+-   Continuing to build, @Macy2003 operationalized consensus, gradual ignorance
+    increase with opinion distance, and opinion *repulsion* where people become
+    even more opposed to one another in their opinions following an interaction.
+    -   Macy and colleagues adapted the *Hopfield network* as their model of
+        opinion change, which is an abstract model of polarity change in
+        networks. @Hopfield1982\
+        first developed this to simulate "neural networks and physical systems".
+    -   @Flache2011
+-   Modern opinion dynamics models are mostly *generative*, with different types
+    serving different purposes. Many problems in opinion science were
+    articulated about the same time as computing power became widely available
+    enough for scientists to be able to use agent-based modeling *en masse*.
+-   It does seem like there exist
+
+## Social influence dynamics
+
+-   Social *influence* can change opinions a little or a lot. This is different
+    from the social *learning* that fuels behavior change, where someone either
+    does something or they don't—it's binary.
+-   In social influence, people can either develop similar opinions as their
+    peers, or ignore their peers' opinions, just as people can either adopt or
+    ignore their peers' *behaviors* in social learning. In the language of
+    opinion dynamics, peers find *consensus* subject to *biased assimilation*.
+    *Consensus* means becoming more similar in opinion. *Biased assimilation* is
+    the technical name for the human tendency to preferentially attend to
+    information that agrees with our current beliefs and ignore information that
+    doesn't.
+-   There is a third possibility when it comes to opinions we can call
+    *anti-consensus*, or repulsive social influence where people who disagree a
+    lot already tend to disagree more after they interact with each other (i.e.,
+    after they influence one another through discourse).
+-   Fourth, and finally, we incorporate the empirical fact that stubbornness
+
+
+### Opinion Dynamics
+
+We consider agents $i$ with a vector of latent opinions  
+
+$$
+\mathbf{o}_i = (o_{i1}, o_{i2}, \ldots, o_{iC}),
+$$ {#eq-opinion-vector}
+
+where $C$ is the cultural complexity (number of opinion dimensions).  
+
+### Stubbornness
+
+Stubbornness scales the responsiveness of an opinion to social influence:
+
+$$
+s(o;\alpha) \;=\; \frac{1}{1 + |o|^\alpha}.
+$$ {#eq-stubbornness}
+
+Moderate opinions ($o \approx 0$) are highly flexible ($s(o)\approx 1$), while extreme opinions ($|o| \gg 0$) become increasingly stubborn ($s(o) \to 0$).  
+This form works for both bounded and unbounded opinions: bounded models impose limits externally, while unbounded models retain smooth decay.
+
+### Dyadic Interaction
+
+When focal agent $i$ interacts with partner $j$, each opinion component is updated by
+
+$$
+o_{i,c}' \;=\; o_{i,c} + \alpha \, s(o_{i,c}) \,\bigl(o_{j,c} - o_{i,c}\bigr),
+$$ {#eq-dyadic-update}
+
+where:
+
+- $c \in \{1, \dots, C\}$ indexes the opinion dimension,  
+- $\alpha \in [0,1]$ is the global learning rate,  
+- $s(o_{i,c})$ is stubbornness from @eq-stubbornness.  
+
+### Iteration
+
+After all dyadic interactions in a time step, opinions are updated synchronously:
+
+$$
+\mathbf{o}_i \;\leftarrow\; \mathbf{o}_i'.
+$$ {#eq-iteration}
 
 
 # Measurement
 
-- In this lecture we focus on measuring opinion change measured with survey
-  responses. 
-- We'll also review 
+-   In this lecture we focus on measuring opinion change measured with survey
+    responses.
+-   We'll also review
 
 ## Opinions
 
 ## Opinion change
 
-
 ## Surveys
 
 ## Legacy opinion change measurement
 
-
 ## Why this is a problem
-
 
 ## Correct opinion change measurement
 
-
 # Case study: echo chamber radicalization (aka *group polarization*)
 
-- We can use the models and measurement we learned so far to 
-  1. simulate *echo chamber radicalization*, which we will call *group
-     polarization* because it's shorter and that's it's name for social
-     psychologists. But we tend to think of polarization as being when two
-     opposing groups are extremely rigidly opposed to each other; some
-     sociologists call this "bi-polarization" to differentiate the everyday
-     layperson's definition of "polarization" from what social psychologists 
-     called "group polarization".
-  2. show how we can estimate the false discovery rate and statistical power of
-     hone experimental design to calculate the false discovery rate
-
+-   We can use the models and measurement we learned so far to
+    1.  simulate *echo chamber radicalization*, which we will call *group
+        polarization* because it's shorter and that's it's name for social
+        psychologists. But we tend to think of polarization as being when two
+        opposing groups are extremely rigidly opposed to each other; some
+        sociologists call this "bi-polarization" to differentiate the everyday
+        layperson's definition of "polarization" from what social psychologists
+        called "group polarization".
+    2.  show how we can estimate the false discovery rate and statistical power
+        of hone experimental design to calculate the false discovery rate
 
 # Discussion
 
-- I wanted to include *sentiment analysis* because it seems like it's measuring
-  something like an opinion if we analyze just one person's speech or writing.
-  But something tells me it needs to be worked out more.
+-   I wanted to include *sentiment analysis* because it seems like it's
+    measuring something like an opinion if we analyze just one person's speech
+    or writing. But something tells me it needs to be worked out more.

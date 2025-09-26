@@ -127,8 +127,8 @@ OpinionAgent <- R6::R6Class(
 # Stubbornness function
 # -------------------------------
 s_latent <- function(o, alpha) {
-  val <- (1 - abs(o)^(2*alpha)) / (1 + abs(o)^alpha)
-  val[val < 0] <- 0  # numerical guard
+  val <- 1.0 / (1.0 + abs(o)^alpha)
+  val[val < 0.0] <- 0.0  # numerical guard
   val
 }
 
