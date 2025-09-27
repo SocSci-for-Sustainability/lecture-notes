@@ -1,83 +1,3 @@
-# OpinionAgent <- R6::R6Class(
-#   classname = "OpinionAgent",
-#   inherit = socmod::Agent,
-#   public = list(
-#     next_opinions = NULL,
-#     opinions = NULL,
-#     step_opinions = function() {
-#       if (is.null(self$next_opinions)) {
-#         stop("next_opinions is NULL; cannot step opinions")
-#       }
-#       
-#       self$opinions <- self$next_opinions
-#       self$next_opinions <- NULL
-#       
-#       return(invisible(self))
-#     },
-#     initialize = function(cultural_complexity = 2, 
-#                           bounded = TRUE, max_initial_opinion = 1.0,
-#                           init_opinions = NULL) {
-#       
-#       # Initialize agent with init_opinions if given
-#       if (!is.null(init_opinions)) {
-#         
-#         if (length(init_opinions) != cultural_complexity) {
-#           stop("Length of init_opinions must match cultural_complexity")
-#         }
-#         
-#         self$opinions <- init_opinions
-#         
-#         return(invisible(self))
-#       }
-#       
-#       # Otherwise initialize agents randomly for convenience 
-#       if (bounded) {
-#         self$opinions <- runif(cultural_complexity, min = -1, max = 1)
-#       } else {
-#         self$opinions <- rnorm(cultural_complexity, mean = 0, sd = 1)
-#       }
-#       
-#       return(invisible(self))
-#     }
-#   ),
-#   private = list(
-#     
-#   )
-# )
-# 
-# 
-# turner_2020 <- function(focal_agent, partner, model) {
-#   
-#   alpha <- model$get_parameter("alpha")
-#   
-#   dij <- mean(abs(focal_agent$opinions - partner$opinions))
-#   wij <- 1 - dij
-#   
-#   delta_ok <- 0.5 * wij * (partner$opinions - focal_agent$opinions)
-#   
-#   # Unified stubbornness: matches Turner inside [-1,1],
-#   # decays smoothly outside that range
-#   abs_o <- abs(focal_agent$opinions)
-#   stubbornness <- (1 - abs_o^(2*alpha)) / (1 + abs_o^alpha)
-#   stubbornness[stubbornness < 0] <- 0  # just in case numerics dip negative
-#   
-#   focal_agent$next_opinions <- focal_agent$opinions + delta_ok * stubbornness
-#   
-#   return(invisible(focal_agent))
-# }
-# 
-# 
-# # Define opinion learning model dynamics
-# opinion_dyanmics <- make_model_dynamics(
-#   partner_selection = function(focal_agent, model) {
-#     
-#   },
-#   interaction = turner_2020,
-#   model_step = \(model) { purrr::walk(model$agents, ~ .x$step_opinions()) }
-# )
-# 
-# 
-
 OpinionAgent <- R6::R6Class(
   classname = "OpinionAgent",
   inherit = socmod::Agent,
@@ -100,8 +20,8 @@ OpinionAgent <- R6::R6Class(
     
     initialize = function(cultural_complexity = 2, 
                           bounded = TRUE, max_initial_opinion = 1.0,
-                          init_opinions = NULL) {
-      
+                          init_opinions = NULL, ...) {
+      super$initialize(...)
       if (!is.null(init_opinions)) {
         self$opinions <- init_opinions
         cultural_complexity <- length(self$opinions)
@@ -133,11 +53,15 @@ s_latent <- function(o, alpha) {
 }
 
 # -------------------------------
-# Turner & Smaldino dyadic update
+# Bivalent social influence: 
+#   negative = anti-consensus/repulsion
+#   positive = consensus
+#   zero = ignore
 # -------------------------------
-turner_2020 <- function(focal_agent, partner, model) {
+social_influence <- function(focal_agent, partner, model) {
+  
   dij <- mean(abs(focal_agent$opinions - partner$opinions))
-  wij <- 1 - dij
+  wij <- 1.0 - dij
   
   delta_ok <- 0.5 * wij * (partner$opinions - focal_agent$opinions)
   
@@ -156,36 +80,36 @@ turner_2020 <- function(focal_agent, partner, model) {
 
 # --- Stubbornness function tests ---
 stopifnot(all.equal(s_latent(0, 1), 1))     # at 0 → 1
-stopifnot(all.equal(s_latent(1, 1), 0))     # at ±1 → 0
+stopifnot(all.equal(s_latent(1, 1), 0.5))     # at ±1 → 0
 stopifnot(s_latent(10, 1) < 0.1)            # large opinions ≈ 0
 
 # --- Opinion update tests ---
 
 # identical agents → no change
-a <- OpinionAgent$new(init_opinions = c(0))
-b <- OpinionAgent$new(init_opinions = c(0))
+a <- OpinionAgent$new(id = 1, name = "yo", init_opinions = c(0))
+b <- OpinionAgent$new(id = 2, name = "hey", init_opinions = c(0))
 graph <- igraph::make_empty_graph(n = 2, directed = FALSE)
-m <- socmod::make_abm(agents = c(a, b), graph = graph, alpha = 1.0)
+m <- socmod::make_abm(agents = c(a, b), alpha = 1.0)
 
-turner_2020(a, b, m)
+social_influence(a, b, m)
 stopifnot(all.equal(a$next_opinions, c(0)))
 
 # similar opinions → small attraction
-a <- OpinionAgent$new(init_opinions = c(0.2))
-b <- OpinionAgent$new(init_opinions = c(0.4))
-turner_2020(a, b, m)
+a <- OpinionAgent$new(id = 1, init_opinions = c(0.2))
+b <- OpinionAgent$new(id = 2, init_opinions = c(0.4))
+social_influence(a, b, m)
 stopifnot(a$next_opinions > 0.2 & a$next_opinions < 0.4)
 
 # distant opinions → repulsion
-a <- OpinionAgent$new(init_opinions = c(-0.9))
-b <- OpinionAgent$new(init_opinions = c(0.9))
-turner_2020(a, b, m)
+a <- OpinionAgent$new(id = 1, init_opinions = c(-0.9))
+b <- OpinionAgent$new(id = 2, init_opinions = c(0.9))
+social_influence(a, b, m)
 stopifnot(abs(a$next_opinions) > abs(a$opinions))  # moves farther out
 
 # 3D opinions → updates each dimension
-a <- OpinionAgent$new(init_opinions = c(-0.5, 0.0, 0.8))
-b <- OpinionAgent$new(init_opinions = c(0.5, -0.2, 0.9))
-turner_2020(a, b, m)
+a <- OpinionAgent$new(id = 1, init_opinions = c(-0.5, 0.0, 0.8))
+b <- OpinionAgent$new(id = 2, init_opinions = c(0.5, -0.2, 0.9))
+social_influence(a, b, m)
 stopifnot(length(a$next_opinions) == 3)                # dimension preserved
 stopifnot(length(a$stubbornness) == 3)                 # stubbornness matches opinions
 stopifnot(!all(a$next_opinions == a$opinions))         # opinions updated
