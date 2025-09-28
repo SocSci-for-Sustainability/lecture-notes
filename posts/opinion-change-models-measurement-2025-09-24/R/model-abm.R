@@ -6,11 +6,15 @@
 #
 # Agent class and social influence for simulating opinion dynamics. 
 #
+library(purrr)
+
+library(socmod)
+
+
 
 # -------------------------------
 # Stubbornness function
 # -------------------------------
-library(socmod)
 
 stubbornness <- function(o, alpha) {
   val <- 1.0 / (1.0 + abs(o)^alpha)
@@ -116,12 +120,14 @@ social_influence <- function(focal_agent, partner, model) {
 }
 
 
-# select 
+# select randomly either with self-influence or nah
 well_mixed_selection <- function(focal, model) { 
+  model$get_parameter("n_agents")
   if (model$self_influence) {
-    agents_to_sample <- model$agents
+    ids_to_sample <- model$get_parameter("n_agents")
   } else {
-    agents_to_sample <- 
+    
+    agents_to_sample <- model$agents
   }
   
   partner <- sample(agents_to_sample, 1)
@@ -133,7 +139,8 @@ well_mixed_selection <- function(focal, model) {
 opinion_dynamics <- make_model_dynamics(
   partner_selection = well_mixed_selection,
   interaction = social_influence,
-  
+  model_step = 
+  label = "Well-mixed opinion dynamics"
 )
 
 
