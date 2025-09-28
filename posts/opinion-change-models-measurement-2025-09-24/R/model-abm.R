@@ -1,40 +1,83 @@
+##
+# 
+# Lecture Notes Code 
+# Date: 2025-09-27
+# Author: Matt Turner <matt@mat.phd>
+#
+# Agent class and social influence for simulating opinion dynamics. 
+#
+
+# -------------------------------
+# Stubbornness function
+# -------------------------------
+library(socmod)
+
+stubbornness <- function(o, alpha) {
+  val <- 1.0 / (1.0 + abs(o)^alpha)
+  val[val < 0.0] <- 0.0  # numerical guard
+  val
+}
+
+
+#' Opinion agent extends base socmod::Agent to add opinions and stubbornness
 OpinionAgent <- R6::R6Class(
   classname = "OpinionAgent",
   inherit = socmod::Agent,
+  
   public = list(
+    # these are new fields in OpinionAgent that Agent doesn't have
     next_opinions = NULL,
     opinions = NULL,
-    stubbornness = NULL,  # new attribute
+    stubbornness = NULL,
+    alpha = 1.0,  # 
     
+    # make opinion stepping internal, unlike current social learning dynamics
     step_opinions = function() {
       if (is.null(self$next_opinions)) {
         stop("next_opinions is NULL; cannot step opinions")
       }
       
-      # Commit new opinions
+      # commit new opinions
       self$opinions <- self$next_opinions
       self$next_opinions <- NULL
       
+      # return this OpinionAgent silently for chaining
       return(invisible(self))
     },
     
-    initialize = function(cultural_complexity = 2, 
-                          bounded = TRUE, max_initial_opinion = 1.0,
-                          init_opinions = NULL, ...) {
-      super$initialize(...)
+    # init for OpinionAgent$new constructor—`id` and `...` go to Agent$new
+    initialize = function(id, cultural_complexity = 2, 
+                          bounded = FALSE, max_op_mag = 1.0,
+                          init_op_mean = 0.0, init_op_sd = 1.0,
+                          init_opinions = NULL, alpha = 1.0, ...) {
+      
+      # base Agent class init for id (req'd); opt'l are name, behavior, fitness
+      super$initialize(id = id, ...)
+      
+      # use initial opinions if user provides
       if (!is.null(init_opinions)) {
         self$opinions <- init_opinions
         cultural_complexity <- length(self$opinions)
+        
+      # otherwise create random opinions...
       } else {
+        # ...use a uniform distro over -1 to 1 if bounded...
         if (bounded) {
-          self$opinions <- runif(cultural_complexity, min = -1, max = 1)
+          self$opinions <- runif(cultural_complexity, 
+                                 min = -max_op_mag, 
+                                 max = max_op_mag)
+        # ...or a normal distribution if not.
         } else {
-          self$opinions <- rnorm(cultural_complexity, mean = 0, sd = 1)
+          self$opinions <- rnorm(cultural_complexity, 
+                                 mean = init_op_mean, 
+                                 sd = init_op_sd)
         }
       }
       
-      # Initialize stubbornness (to be updated on first interaction)
-      self$stubbornness <- rep(NA_real_, cultural_complexity)
+      self$alpha <- alpha
+      
+      # init stubbornness vector, one entry for each opinion in opinion vector
+      self$stubbornness <- stubbornness(self$opinions, self$alpha)
       
       return(invisible(self))
     }
@@ -43,21 +86,19 @@ OpinionAgent <- R6::R6Class(
 )
 
 
-# -------------------------------
-# Stubbornness function
-# -------------------------------
-s_latent <- function(o, alpha) {
-  val <- 1.0 / (1.0 + abs(o)^alpha)
-  val[val < 0.0] <- 0.0  # numerical guard
-  val
-}
 
-# -------------------------------
-# Bivalent social influence: 
-#   negative = anti-consensus/repulsion
-#   positive = consensus
-#   zero = ignore
-# -------------------------------
+#' Bivalent social influence
+#' 
+#' negative = anti-consensus/repulsion
+#' positive = consensus
+#' zero = ignore
+#'
+#' @param focal_agent 
+#' @param partner 
+#' @param model 
+#'
+#' @returns
+#' @export
 social_influence <- function(focal_agent, partner, model) {
   
   dij <- mean(abs(focal_agent$opinions - partner$opinions))
@@ -74,9 +115,30 @@ social_influence <- function(focal_agent, partner, model) {
   return(invisible(focal_agent))
 }
 
-# -------------------------------
-# Ad hoc sanity checks
-# -------------------------------
+
+# select 
+well_mixed_selection <- function(focal, model) { 
+  if (model$self_influence) {
+    agents_to_sample <- model$agents
+  } else {
+    agents_to_sample <- 
+  }
+  
+  partner <- sample(agents_to_sample, 1)
+  
+  return(partner)
+}
+
+# Basic model dynamics for the no-
+opinion_dynamics <- make_model_dynamics(
+  partner_selection = well_mixed_selection,
+  interaction = social_influence,
+  
+)
+
+
+#--------- ad hoc unit tests, i.e., sanity checks ---------
+
 
 # --- Stubbornness function tests ---
 stopifnot(all.equal(s_latent(0, 1), 1))     # at 0 → 1
