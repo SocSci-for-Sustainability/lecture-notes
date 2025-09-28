@@ -4,35 +4,61 @@ date: 2025-09-24
 author: Matt Turner
 categories: [opinion dynamics, polarization, extremism, statistics]
 number-sections: false
+editor: 
+  markdown: 
+    wrap: 80
 ---
 
 Social influence shapes opinions in ways that matter for sustainability. Unlike behaviors, which are adopted or not, opinions shift gradually—toward, away from, or resistant to those of others. We can think of assimilation as a scale: at one end, consensus, where people grow more similar through interaction; at the other, anti-consensus, where disagreement deepens; and in the middle, a zone of zero influence, through ignorance or defiance. These dynamics aren’t visible in behavior alone. A closer look at group polarization shows how extreme, inflexible actors can shift group outcomes even when average opinions appear unchanged. If we understand how opinions move—not just what people do—we can design influence, not just react to it.
 
 # Introduction: opinion change, instutitions, and sustainability
 
-- Opinions are equivalent to beliefs or attitudes: they are theoretical constructions hypothesized to affect behavior, but need not be based on evidence or experience, but hearsay from others.
-- Polarization and extremism incapacitate the institutions responsible for
-  forest and coastline management, to name two examples. In forest management,
-  we know prescribed burns could prevent catastrophic wildfires 
-  [@Eisenberg2019;@Kolden2019]. 
-  So although we have Indigenous practices for climate action ([SDG 13](https://sdgs.un.org/goals/goal13))
-  and the protection of Life on Land ([SDG
-  15](https://sdgs.un.org/goals/goal15)) they are ignored in favor of
-  maladaptive modern practices. These traditional practices have helped
-  historically local inhabitants over thousands of years, and they can still
-  help now.
-- Opinion science, then, can help us answer the primary puzzle of
-  sustainable adaptation: why do maladaptive, unsustainable practices take hold 
-  and not adaptive, sustainable ones [@fig-puzzle-of-adaptation]?
+-   Opinions are equivalent to beliefs or attitudes: they are theoretical
+    constructions hypothesized to affect behavior, but need not be based on
+    evidence or experience, but hearsay from others.
+-   Polarization and extremism incapacitate the institutions responsible for
+    forest and coastline management, to name two examples. In forest management,
+    we know prescribed burns could prevent catastrophic wildfires
+    [@Eisenberg2019; @Kolden2019]. So although we have Indigenous practices for
+    climate action ([SDG 13](https://sdgs.un.org/goals/goal13)) and the
+    protection of Life on Land ([SDG 15](https://sdgs.un.org/goals/goal15)) they
+    are ignored in favor of maladaptive modern practices. These traditional
+    practices have helped historically local inhabitants over thousands of
+    years, and they can still help now.
+-   Opinion science, then, can help us answer the primary puzzle of sustainable
+    adaptation: why do maladaptive, unsustainable practices take hold and not
+    adaptive, sustainable ones [@fig-puzzle-of-adaptation]?
 
-![**The puzzle of adaptation.**](../Figures/puzzle-of-adaptation.png){#fig-puzzle-of-adaptation width="700"}
+![**The puzzle of
+adaptation.**](../Figures/puzzle-of-adaptation.png){#fig-puzzle-of-adaptation
+width="700"}
 
-  
-# Opinion dynamics models
 
-The scientific study of change in the physical world is often called *dynamics*.
-Therefore, we call the scientific study of opinion change *opinion dynamics*,
-terminology shared by sociologists, cognitive scientists, and species of 
+# Social influence 
+
+-   Social *influence* can change opinions a little or a lot. This is different
+    from the social *learning* that fuels behavior change, where someone either
+    does something or they don't—it's binary.
+-   In social influence, people can either develop similar opinions as their
+    peers, or ignore their peers' opinions, just as people can either adopt or
+    ignore their peers' *behaviors* in social learning. In the language of
+    opinion dynamics, peers find *consensus* subject to *biased assimilation*.
+    *Consensus* means becoming more similar in opinion. *Biased assimilation* is
+    the technical name for the human tendency to preferentially attend to
+    information that agrees with our current beliefs and ignore information that
+    doesn't.
+-   There is a third possibility when it comes to opinions we can call
+    *anti-consensus*, or repulsive social influence where people who disagree a
+    lot already tend to disagree more after they interact with each other (i.e.,
+    after they influence one another through discourse).
+-   Fourth, and finally, we incorporate the empirical fact that stubbornness
+
+
+## Opinion Dynamics
+
+The scientific study of change in the physical world is the study of *dynamics*.
+So, the scientific study of opinion change is *opinion dynamics*,
+a label shared by sociologists, cognitive scientists, and species of 
 social scientist. 
 
 Opinion dynamics can take several forms, but we can trace a through-line of
@@ -66,6 +92,7 @@ assimilation* of information, where people ignore information that is
 neither supportive or challenging enough to catch their interest. This
 model was adapted from the Hopfield network model to explain the physical processes
 underlying memory in cognitive science (see margin note right). 
+
 @Flache2011 took this a step further to investigate how social networks
 might affect whether societies became highly polarized or not. 
 In @Turner2018 I used simulations I also formally calculated the
@@ -92,45 +119,95 @@ influence dynamics. This signals to us that we have a plausible mechanistic
 model: a causal story supported by evidence about real-world social influence
 mechanisms produced by a pluralism of social science disciplines. 
 
+### Opinion dynamics equations
+
+Each individual, $i$, has a set of $C$ opinions with a vector of latent opinions 
+
+$$
+\mathbf{o}_i = (o_{i1}, o_{i2}, \ldots, o_{iC}),
+$$ {#eq-opinion-vector}
+
+where $C$ is the cultural complexity (number of opinion dimensions).  
+
+### Stubbornness
+
+Stubbornness scales the responsiveness of an opinion to social influence:
+
+$$
+s(o;\alpha) \;=\; \frac{1}{1 + |o|^\alpha}.
+$$ {#eq-stubbornness}
+
+Moderate opinions ($o \approx 0$) are highly flexible ($s(o)\approx 1$), while
+extreme opinions ($|o| \gg 0$) become increasingly stubborn ($s(o) \to 0$).
+This form works for both bounded and unbounded opinions: bounded models impose
+limits externally, while unbounded models retain smooth decay.
+
+### Dyadic Interaction
+
+When focal agent $i$ interacts with partner $j$, each opinion component is
+updated by
+
+$$
+o_{i,c}' \;=\; o_{i,c} + \alpha \Delta o_{i,c},
+$$ {#eq-dyadic-update}
+
+where $c \in \{1, \dots, C\}$ indexes the cultural dimension—the topic the opinion
+refers to, $\alpha \in [0,1]$ is the global learning rate, and
+
+$$
+\Delta o_{i,c} = \alpha \, s(o_{i,c}) \,\bigl(o_{j,c} - o_{i,c}\bigr)
+$$
+
+
+### Stubborn extremism
+
+- $s(o_{i,c})$ is stubbornness (@eq-stubbornness).
+
+
+### Iteration
+
+After all dyadic interactions in a time step, opinions are updated synchronously:
+
+$$
+\mathbf{o}_i \;\leftarrow\; \mathbf{o}_i'.
+$$ {#eq-iteration}
+  
+
 
 # Measurement
 
-- In this lecture we focus on measuring opinion change measured with survey
-  responses. 
-- We'll also review 
+In this lecture we focus on measuring opinion change measured with survey 
+responses. 
 
-## Opinions
+## 
 
-## Opinion change
+
+## At one time, for one person and one topic
 
 
 ## Surveys
 
 ## Legacy opinion change measurement
 
-
 ## Why this is a problem
-
 
 ## Correct opinion change measurement
 
-
 # Case study: echo chamber radicalization (aka *group polarization*)
 
-- We can use the models and measurement we learned so far to 
-  1. simulate *echo chamber radicalization*, which we will call *group
-     polarization* because it's shorter and that's it's name for social
-     psychologists. But we tend to think of polarization as being when two
-     opposing groups are extremely rigidly opposed to each other; some
-     sociologists call this "bi-polarization" to differentiate the everyday
-     layperson's definition of "polarization" from what social psychologists 
-     called "group polarization".
-  2. show how we can estimate the false discovery rate and statistical power of
-     hone experimental design to calculate the false discovery rate
-
+-   We can use the models and measurement we learned so far to
+    1.  simulate *echo chamber radicalization*, which we will call *group
+        polarization* because it's shorter and that's it's name for social
+        psychologists. But we tend to think of polarization as being when two
+        opposing groups are extremely rigidly opposed to each other; some
+        sociologists call this "bi-polarization" to differentiate the everyday
+        layperson's definition of "polarization" from what social psychologists
+        called "group polarization".
+    2.  show how we can estimate the false discovery rate and statistical power
+        of hone experimental design to calculate the false discovery rate
 
 # Discussion
 
-- I wanted to include *sentiment analysis* because it seems like it's measuring
-  something like an opinion if we analyze just one person's speech or writing.
-  But something tells me it needs to be worked out more.
+-   I wanted to include *sentiment analysis* because it seems like it's
+    measuring something like an opinion if we analyze just one person's speech
+    or writing. But something tells me it needs to be worked out more.
