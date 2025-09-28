@@ -3,7 +3,7 @@ project:
 sidebar:
   logo: SS4S.key.png
 website:
-  title: "Social Science for Sustainability — Lecture Notes"
+  title: "Social Science for Sustainability — Course Notes"
   navbar:
     right:
       - text: "Subscribe to SS4S"
