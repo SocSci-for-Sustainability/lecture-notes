@@ -9,57 +9,154 @@ editor:
     wrap: 80
 ---
 
+```{r}
+#| include: false
+library(tidyverse)
+library(tidytext)
+
+```
+
+**Abstract**
+
 Social influence shapes opinions in ways that matter for sustainability. Unlike behaviors, which are adopted or not, opinions shift gradually—toward, away from, or resistant to those of others. We can think of assimilation as a scale: at one end, consensus, where people grow more similar through interaction; at the other, anti-consensus, where disagreement deepens; and in the middle, a zone of zero influence, through ignorance or defiance. These dynamics aren’t visible in behavior alone. A closer look at group polarization shows how extreme, inflexible actors can shift group outcomes even when average opinions appear unchanged. If we understand how opinions move—not just what people do—we can design influence, not just react to it.
 
-# Introduction: opinion change, instutitions, and sustainability
 
--   Opinions are equivalent to beliefs or attitudes: they are theoretical
-    constructions hypothesized to affect behavior, but need not be based on
-    evidence or experience, but hearsay from others.
--   Polarization and extremism incapacitate the institutions responsible for
-    forest and coastline management, to name two examples. In forest management,
-    we know prescribed burns could prevent catastrophic wildfires
-    [@Eisenberg2019; @Kolden2019]. So although we have Indigenous practices for
-    climate action ([SDG 13](https://sdgs.un.org/goals/goal13)) and the
-    protection of Life on Land ([SDG 15](https://sdgs.un.org/goals/goal15)) they
-    are ignored in favor of maladaptive modern practices. These traditional
-    practices have helped historically local inhabitants over thousands of
-    years, and they can still help now.
--   Opinion science, then, can help us answer the primary puzzle of sustainable
-    adaptation: why do maladaptive, unsustainable practices take hold and not
-    adaptive, sustainable ones [@fig-puzzle-of-adaptation]?
+# Introduction: opinion change to reduce cultural inertia against sustainability
+
+Extremism and polarization can incapacitate the governments and institutions who are responsible for ecological and environmental protection. Opinions are equivalent to beliefs or attitudes: they are theoretical constructions hypothesized to affect behavior, but need not be based on evidence or experience, but hearsay from others. 
+In forest management, we know prescribed burns could prevent catastrophic wildfires
+[@Eisenberg2019; @Kolden2019]. So although we have Indigenous practices for
+climate action ([SDG 13](https://sdgs.un.org/goals/goal13)) and the
+protection of Life on Land ([SDG 15](https://sdgs.un.org/goals/goal15)) they
+are ignored in favor of maladaptive modern practices. These traditional
+practices have helped historically local inhabitants over thousands of
+years, and they can still help now. 
+
+This is not to say that the healthiest institutions have zero differences in opinion among its members, or that all citizens be impassionate moderates on every issue. Healthy disagreement is necessary to be able to adapt to the steady march of history punctuated by acute crises—times when cultural diversity within an institution is harnessed as a source of innovation to adapt and persist. Furthermore, I, for one, am 100% FOR *ELEVATED* (not "extreme", see?) support for policies that enforce agreements to protect our collective rights to life, liberty, and the pursuit of happines, and to protect these same rights for future generations[^ethics-of-enforcement]. 
+
+The science of opinion change, or just *opinion science*, has a critical role in addressing the puzzle of viral sustainability—what will it take for more simple, inexpensive, proven methods for climate action and ecological protection [@fig-puzzle-of-adaptation]? In some cases, extremism turns violent and destructive, endangering hope for our collective future, sustainable or not. Tensions flare when polarization increases ever high—interested parties can rapidly tip over from uneasy coexistence to open violence. 
+
+Diversity and passion can fuel institutions perpetually so that "failure is impossible"—these were the rousing final words of Susan B. Anthony to the women's suffrage movement she led. The "extremism" of those demanding women's suffrage was necessary for the moment, since the choice is binary—just as it is now for designing sustainable futures. The alliance between women, black, and universal suffrage movements combined to be more than the sum of its parts because of the way diverse voices amplify one another, and the gain of the amplification increases exponentially with the number and diversity of the collective.
+
+In the following notes we review first how opinions and opinion change are measured. I'll give real-world examples from studies of *group polarization*, which is defined as when people in echo chambers become more extreme in their views over time just by talking with one another.  Then I will introduce a model of social influence that drives opinion change. Opinion change also depends on personality types in a population and patterns in interactions between people. Some people interact more frequently than others. We use *social network models* to represent different interaction structures.
 
 ![**The puzzle of
 adaptation.**](../Figures/puzzle-of-adaptation.png){#fig-puzzle-of-adaptation
 width="700"}
 
 
-# Social influence 
 
--   Social *influence* can change opinions a little or a lot. This is different
-    from the social *learning* that fuels behavior change, where someone either
-    does something or they don't—it's binary.
--   In social influence, people can either develop similar opinions as their
-    peers, or ignore their peers' opinions, just as people can either adopt or
-    ignore their peers' *behaviors* in social learning. In the language of
-    opinion dynamics, peers find *consensus* subject to *biased assimilation*.
-    *Consensus* means becoming more similar in opinion. *Biased assimilation* is
-    the technical name for the human tendency to preferentially attend to
-    information that agrees with our current beliefs and ignore information that
-    doesn't.
--   There is a third possibility when it comes to opinions we can call
-    *anti-consensus*, or repulsive social influence where people who disagree a
-    lot already tend to disagree more after they interact with each other (i.e.,
-    after they influence one another through discourse).
--   Fourth, and finally, we incorporate the empirical fact that stubbornness
+# Measurement
 
 
-## Opinion Dynamics
+
+Opinion dynamics are commonly studied empirically using 
+survey studies administered to the same group of participants over
+time, called *longitudinal* surveys. We will focus on this interpretation for
+  concreteness and because it is the most used measurement method in group polarization studies, which I use for a case study below. Unfortunately, group polarization presents a textbook case of what *not* to do to measure opinion change—it seems statistical problems have caused some 
+  
+## Survey measurement 
+
+
+
+## Implicit Association Test
+
+- Other options for measuring opinions:
+  1. *implicit association test*
+   uses keypress timing in an computer-based identification task to
+  infer opinions, or *bias*, in 
+    - see @Greenwald2009 for a more recent analysis, @Greenwald1995 for one
+      of the landmark original papers
+    - For more research and teaching materials, the [Project Implicit
+      Resources]() looks impressive, including: 
+      - [About the
+        IAT](https://www.projectimplicit.net//resources/about-the-iat/), which
+        explains it very well[^1] 
+      - [Stimulus Materials for Social and Behavioral
+      Research](https://www.projectimplicit.net/resources/study-materials/).
+      - [Published manuscripts using **Public Data**](). To me this could be a
+        treasure trove for project ideas. Think about modifying one or mashing
+        up a couple of these and it seems you could have an impactful project.
+        
+
+## Computational linguistics: Words as Windows into Opinion and Meaning
+
+*Computational linguistics* provides several tools for inferring peoples' opinions, or what different words mean to different communities over time, that could be useful for promoting sustainable futures. I breifly mention two below with some references and examples: *sentiment analysis* that infers a person's opinion (equivalent to sentiment I say) and *topic analysis* that calcualtes the probabilty one word tells us about the meaning of another depending on how frequently, they occur with each other compared to other words.
+
+
+### Sentiment Analysis
+
+*Sentiment analysis* is a computational linguistic method
+that infers a writer or speaker's opinion on different topics based on how
+frequently they used positive or negative words (such as "good" or "bad") 
+in discussing those topics. Surveys elicit what people are ready to declare; the IAT stages associations to catch what cannot be comfortably admitted. A third approach is to look outward, treating ordinary language—how people talk about energy, climate, or community—as opinion in itself [@Cody2015]. 
+
+Sentiment analysis makes this tractable at scale: tokenize text, map words to a sentiment lexicon, and tally the balance. In R this takes only a few lines, and while the results are blunt (“hope” = positive, “fear” = negative), bluntness is revealing. These tags have no essence: hope is only hope against despair, good against bad, and in other contexts fear preserves, hope deceives, evil sustains. Words are not timeless carriers of meaning but cultural agreements we stabilize for a time. 
+
+What sentiment analysis exposes, then, is not hidden psychological states but the scaffolding by which communities themselves domesticate affects into usable binaries. For sustainability research this is crucial: it shows how opinion change unfolds not in pristine categories but in the contingent ways we decide to commit to certain meanings and let others go. If we try to be everything to everyone we will be nothing in the end.
+
+
+```{r}
+text <- tibble(
+  id = 1:3,
+  message = c(
+    "Solar energy adoption is inspiring and creates hope for a sustainable future.",
+    "Climate change is a serious threat that causes anxiety and fear.",
+    "Community gardens reduce waste and bring joy to neighborhoods."
+  )
+)
+
+tidy_text <- text %>% unnest_tokens(word, message)
+
+sentiments <- tidy_text %>%
+  inner_join(get_sentiments("bing"), by = "word")
+
+sentiment_summary <- sentiments %>%
+  count(id, sentiment) %>%
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>%
+  mutate(overall_sentiment = positive - negative)
+```
+
+### Topic Modeling
+
+*Topic Modeling* is a similar technique that *does* help us infer word meanings when said by different people in different contexts over time [@Hamilton2016;@Hamilton2016c]. The technique tracks
+how frequently words co-occur with each other in phrases and sentences to quantify how much more likely they are than chance to be part of one another's conceptualization—for example, .
+
+The example below is not very interesting because our *corpus*, or the set of "documents" that we analyze, is too small to perform the statistics necessary to learn the meanings of words.
+
+For politics, decision making, or sustainability it could be helpful to explore how terms like *sustainability*, *climate change*, and *adaptation* are used on different news outlets, online communities, and public forums, just to name a few opportunities.
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(topicmodels)
+
+
+# Tokenize and create document-term matrix
+tidy_text <- text %>%
+  unnest_tokens(word, message) %>%
+  anti_join(stop_words, by = "word")
+
+dtm <- tidy_text %>%
+  count(id, word) %>%
+  cast_dtm(document = id, term = word, value = n)
+
+# Fit a 2-topic LDA model
+lda_model <- LDA(dtm, k = 2, control = list(seed = 123))
+
+# Get per-document topic probabilities (gamma)
+doc_topics <- tidy(lda_model, matrix = "gamma")
+
+print(doc_topics)
+```
+
+# Opinion Dynamics Models
 
 The scientific study of change in the physical world is the study of *dynamics*.
 So, the scientific study of opinion change is *opinion dynamics*,
 a label shared by sociologists, cognitive scientists, and species of 
-social scientist. 
+social scientist. In our simulations, we observe several outcomes: whether consensus or polarization occur either globally or in certain communities; and whether a group's opinion becomes more extreme when it finds consensus, or whether the magnitude of the 
+mean group opinion stays constant or increases in magnitude. If it increases in magnitude this is indicative of *group polarization*, a central research topic in social psychology.
 
 Opinion dynamics can take several forms, but we can trace a through-line of
 the development of what we can now call *social influence* opinion dynamics.
@@ -74,16 +171,33 @@ The magnitude of one's opinion represents their extremism [@Blau1974]. Note this
 implies *opinions* exist within limited affordances of different *topics*, 
 which themselves are latent and unobservable.
 
-### DeGroot's simple consensus dynamic
 
+
+### Social Influence
+
+Social *influence* can change opinions a little or a lot. This is different
+  from the social *learning* that fuels behavior change, where someone either
+  does something or they don't—it's binary.
+In social influence, people can either develop similar opinions as their
+peers, or ignore their peers' opinions, just as people can either adopt or
+ignore their peers' *behaviors* in social learning. In the language of
+opinion dynamics, peers find *consensus*, subject to *biased assimilation*.
+
+*Consensus* means a group of two or more people's opinions become more similar over time. *Anti-consensus* is the opposite, where when people discuss their opinions, their opinions become more different—it is like the opinions *repel* each other. Consensus, then, is identified by a reduction in variance of group opinions, and anti-consensus by an increase in variance. Consensus, then, leads to a reduction in polarization, and anti-consensus an increase in polarization. 
+
+When consensus occurs the mean opinion could stay constant or change along with the reduction in variance. If the mean stays constant this is *simple consensus*. If the mean magnitude of group opinions becomes greater over time, then the group became more extreme, otherwise the group became more moderate.
+
+
+### A Very Brief and Incomplete History
+
+@Abelson1964 perhaps first sketched a model like the one we adopt here. His chapter reviews mathematical approaches to opinion change of the time, including terms that modulate the strength of influence such as opinion difference and opinion extremism.
 @DeGroot1974 developed an early *simple consensus* influence dynamic where 
 interaction always increases opinion similarity through iterated averaging.
+The *bounded confidence* dynamic developed a mechanism of selective ignorance activated if people's opinions were sufficintly outside some "bound"—which inspires "confidence" I guess [@Hegselmann2002;@Lorenz2007]?
 
-### Bounded confidence dynamic
 
-@Hegselmann2002, @Lorenz2007, and colleagues augmented simple consensus.
+### Social Networks and Initial Conditions
 
-### Social influence dynamics
 
 @Macy2003 first introduced what I call *social influence* dynamics. 
 Social influence dynamics incorporates gradual consensus or anti-consensus—
@@ -94,10 +208,23 @@ model was adapted from the Hopfield network model to explain the physical proces
 underlying memory in cognitive science (see margin note right). 
 
 @Flache2011 took this a step further to investigate how social networks
-might affect whether societies became highly polarized or not. 
-In @Turner2018 I used simulations I also formally calculated the
-polarization in the limiting case where everyone's opinions are set to one
-extreme or another at random.
+might affect whether societies became highly polarized or not. They
+modeled how the internet increases our exposure to opinions 
+we are likely to hate, leading to increased
+polarization—that's ignoring any algorithmic boosts for such content. 
+They found that adding such "long-range ties" between previously
+disconncted people increased opinion polarization in simulations.
+
+In @Turner2018 we adopted a similar approach to understand the complex causal mechanisms 
+show that the timing of different 
+interactions, and how well we communicate, of human discourse, a society's initial
+extremism, and shared cultural interest
+There are many unanswered questions about how different structures of
+interaction, which we represent in computer simulations as social network models.
+This may be especially salient in the case of either de-escalation campaigns
+to reduce a society's more destructive tendencies, or in trying to 
+strengthen resolve and conviction to pursue sustainable policies.
+
 
 ::: {.column-margin}
 **Stubborn extremism: a hidden assumption of the Hopfield model.** 
@@ -119,7 +246,7 @@ influence dynamics. This signals to us that we have a plausible mechanistic
 model: a causal story supported by evidence about real-world social influence
 mechanisms produced by a pluralism of social science disciplines. 
 
-### Opinion dynamics equations
+### Social influence formalism
 
 Each individual, $i$, has a set of $C$ opinions with a vector of latent opinions 
 
@@ -128,6 +255,7 @@ $$
 $$ {#eq-opinion-vector}
 
 where $C$ is the cultural complexity (number of opinion dimensions).  
+
 
 ### Stubbornness
 
@@ -173,26 +301,6 @@ $$
 $$ {#eq-iteration}
   
 
-
-# Measurement
-
-In this lecture we focus on measuring opinion change measured with survey 
-responses. 
-
-## 
-
-
-## At one time, for one person and one topic
-
-
-## Surveys
-
-## Legacy opinion change measurement
-
-## Why this is a problem
-
-## Correct opinion change measurement
-
 # Case study: echo chamber radicalization (aka *group polarization*)
 
 -   We can use the models and measurement we learned so far to
@@ -206,8 +314,10 @@ responses.
     2.  show how we can estimate the false discovery rate and statistical power
         of hone experimental design to calculate the false discovery rate
 
+
 # Discussion
 
--   I wanted to include *sentiment analysis* because it seems like it's
-    measuring something like an opinion if we analyze just one person's speech
-    or writing. But something tells me it needs to be worked out more.
+- We introduced methods for measuring real-world opinion change and simulating latent opinion dynamics and the survey measurement process.
+- How we represent opinion change has practical implications: we saw that a high number of select group polarization studies must be retracted because the detections of group polarization they present do not exclude the possibility that simple consensus and not group polarization occurred. Therefore the findings must be excluded from our considered research.
+- Opinion dynamics is founded on a long interdisciplinary history, which we plan to continue to build on.
+- There are immediate research opportunities because we know little about real-world opinion dynamics in general—our lack of understanding is worse still in sustainability sciences.
